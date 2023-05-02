@@ -4,6 +4,7 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }) {
   const [data, setData] = useState([]);
+  const [inputText, setInputText] = useState('');
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -16,7 +17,9 @@ function AppProvider({ children }) {
 
   const values = useMemo(() => ({
     data,
-  }), [data]);
+    inputText,
+    setInputText,
+  }), [data, inputText, setInputText]);
 
   return (
     <AppContext.Provider value={ values }>
