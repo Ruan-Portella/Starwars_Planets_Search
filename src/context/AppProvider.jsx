@@ -4,7 +4,7 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }) {
   const [data, setData] = useState([]);
-  const [initialData, setInitialData] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [inputText, setInputText] = useState('');
   const [columnOptions, setColumnOptions] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
@@ -18,45 +18,57 @@ function AppProvider({ children }) {
       const response = await fetch('https://swapi.dev/api/planets');
       const results = await response.json();
       setData(results.results);
-      setInitialData(results.results);
+      setFiltered(results.results);
     };
     fetchApi();
   }, []);
 
+  const removeFilters = useCallback((option) => {
+    setColumnOptions([...columnOptions, option]);
+    const removeFilter = filters.map((columnFilters) => columnFilters)
+      .filter((filter) => filter.column !== option);
+    setFilters([...removeFilter]);
+  }, [columnOptions, filters]);
+
   const buttonFilter = useCallback(() => {
     setColumnOptions(columnOptions.filter((option) => option !== columnFilter));
-    switch (comparisonFilter) {
-    case 'maior que': {
-      const filtered = data
-        .filter((person) => Number(person[columnFilter]) > Number(numberFilter));
-      setColumnFilter(columnOptions[0]);
-      setData(filtered);
-      setFilters([...filters, { columnFilter, comparisonFilter, numberFilter }]);
-      break;
-    }
-    case 'menor que': {
-      const filtered = data
-        .filter((person) => Number(person[columnFilter]) < Number(numberFilter));
-      setColumnFilter(columnOptions[0]);
-      setData(filtered);
-      setFilters([...filters, { columnFilter, comparisonFilter, numberFilter }]);
-      break;
-    }
-    case 'igual a': {
-      const filtered = data
-        .filter((person) => Number(person[columnFilter]) === Number(numberFilter));
-      setColumnFilter(columnOptions[0]);
-      setData(filtered);
-      setFilters([...filters, { columnFilter, comparisonFilter, numberFilter }]);
-      break;
-    }
-    default:
-      break;
-    }
-  }, [columnFilter, comparisonFilter, data, numberFilter, filters, columnOptions]);
+    setFilters([...filters, { column: columnFilter,
+      comparison: comparisonFilter,
+      number: numberFilter }]);
+    setColumnFilter(columnOptions[0]);
+  }, [columnFilter, comparisonFilter, numberFilter, filters, columnOptions]);
+
+  useEffect(() => {
+    let filterPlanets = [...data];
+    const planetsFiltered = (planetValue, comparison, filterValue) => {
+      switch (comparison) {
+      case 'maior que': {
+        return +planetValue > +filterValue;
+      }
+      case 'menor que': {
+        return +planetValue < +filterValue;
+      }
+      case 'igual a': {
+        return +planetValue === +filterValue;
+      }
+      default:
+        return true;
+      }
+    };
+
+    filters.forEach(({ column, comparison, number }) => {
+      filterPlanets = filterPlanets
+        .filter((planet) => planetsFiltered(
+          Number(planet[column]),
+          comparison,
+          Number(number),
+        ));
+    });
+    setFiltered(filterPlanets);
+  }, [data, filters]);
 
   const values = useMemo(() => ({
-    data,
+    filtered,
     inputText,
     setInputText,
     columnFilter,
@@ -67,9 +79,15 @@ function AppProvider({ children }) {
     setNumberFilter,
     buttonFilter,
     columnOptions,
-  }), [data, inputText, setInputText, columnFilter,
+    setColumnOptions,
+    filters,
+    setFilters,
+    removeFilters,
+  }), [filtered, inputText, setInputText, columnFilter,
     setColumnFilter, comparisonFilter, setComparisonFilter,
-    numberFilter, setNumberFilter, buttonFilter, columnOptions]);
+    numberFilter, setNumberFilter, buttonFilter,
+    columnOptions, filters, removeFilters, setFilters,
+    setColumnOptions]);
 
   return (
     <AppContext.Provider value={ values }>

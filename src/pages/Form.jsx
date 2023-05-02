@@ -7,7 +7,11 @@ function Form() {
     columnFilter, setColumnFilter,
     comparisonFilter, setComparisonFilter,
     numberFilter, setNumberFilter,
-    buttonFilter, columnOptions } = useContext(AppContext);
+    buttonFilter, columnOptions,
+    filters, removeFilters,
+    setFilters,
+    setColumnOptions } = useContext(AppContext);
+
   return (
     <div>
       <form className="form">
@@ -26,11 +30,6 @@ function Form() {
           {columnOptions.map((option) => (
             <option key={ option } value={ option }>{option}</option>
           ))}
-          {/* <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option> */}
         </select>
         <select
           data-testid="comparison-filter"
@@ -50,6 +49,34 @@ function Form() {
         <button data-testid="button-filter" type="button" onClick={ buttonFilter }>
           Filtrar
         </button>
+        <button
+          data-testid="button-remove-filters"
+          type="button"
+          onClick={ () => {
+            setFilters([]);
+            setColumnOptions(['population', 'orbital_period',
+              'diameter', 'rotation_period', 'surface_water']);
+          } }
+        >
+          Remover Filtros
+        </button>
+        <ul>
+          {
+            filters.map((filter, index) => (
+              <li key={ index } data-testid="filter">
+                <span>{filter.column}</span>
+                <span>{filter.comparison}</span>
+                <span>{filter.number}</span>
+                <button
+                  type="button"
+                  onClick={ () => removeFilters(filter.column) }
+                >
+                  X
+                </button>
+              </li>
+            ))
+          }
+        </ul>
       </form>
       <Table />
     </div>
