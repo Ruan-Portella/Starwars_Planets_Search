@@ -7,7 +7,7 @@ function Form() {
     columnFilter, setColumnFilter,
     comparisonFilter, setComparisonFilter,
     numberFilter, setNumberFilter,
-    buttonFilter } = useContext(AppContext);
+    buttonFilter, columnOptions } = useContext(AppContext);
   return (
     <div>
       <form className="form">
@@ -23,11 +23,14 @@ function Form() {
           value={ columnFilter }
           onChange={ ({ target }) => setColumnFilter(target.value) }
         >
-          <option value="population">population</option>
+          {columnOptions.map((option) => (
+            <option key={ option } value={ option }>{option}</option>
+          ))}
+          {/* <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
           <option value="diameter">diameter</option>
           <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          <option value="surface_water">surface_water</option> */}
         </select>
         <select
           data-testid="comparison-filter"

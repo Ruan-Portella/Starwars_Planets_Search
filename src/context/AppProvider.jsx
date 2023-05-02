@@ -6,6 +6,8 @@ function AppProvider({ children }) {
   const [data, setData] = useState([]);
   const [initialData, setInitialData] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [columnOptions, setColumnOptions] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
   const [columnFilter, setColumnFilter] = useState('population');
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [numberFilter, setNumberFilter] = useState(0);
@@ -22,10 +24,12 @@ function AppProvider({ children }) {
   }, []);
 
   const buttonFilter = useCallback(() => {
+    setColumnOptions(columnOptions.filter((option) => option !== columnFilter));
     switch (comparisonFilter) {
     case 'maior que': {
       const filtered = data
         .filter((person) => Number(person[columnFilter]) > Number(numberFilter));
+      setColumnFilter(columnOptions[0]);
       setData(filtered);
       setFilters([...filters, { columnFilter, comparisonFilter, numberFilter }]);
       break;
@@ -33,6 +37,7 @@ function AppProvider({ children }) {
     case 'menor que': {
       const filtered = data
         .filter((person) => Number(person[columnFilter]) < Number(numberFilter));
+      setColumnFilter(columnOptions[0]);
       setData(filtered);
       setFilters([...filters, { columnFilter, comparisonFilter, numberFilter }]);
       break;
@@ -40,6 +45,7 @@ function AppProvider({ children }) {
     case 'igual a': {
       const filtered = data
         .filter((person) => Number(person[columnFilter]) === Number(numberFilter));
+      setColumnFilter(columnOptions[0]);
       setData(filtered);
       setFilters([...filters, { columnFilter, comparisonFilter, numberFilter }]);
       break;
@@ -47,7 +53,7 @@ function AppProvider({ children }) {
     default:
       break;
     }
-  }, [columnFilter, comparisonFilter, data, numberFilter, filters]);
+  }, [columnFilter, comparisonFilter, data, numberFilter, filters, columnOptions]);
 
   const values = useMemo(() => ({
     data,
@@ -60,9 +66,10 @@ function AppProvider({ children }) {
     numberFilter,
     setNumberFilter,
     buttonFilter,
+    columnOptions,
   }), [data, inputText, setInputText, columnFilter,
     setColumnFilter, comparisonFilter, setComparisonFilter,
-    numberFilter, setNumberFilter, buttonFilter]);
+    numberFilter, setNumberFilter, buttonFilter, columnOptions]);
 
   return (
     <AppContext.Provider value={ values }>
