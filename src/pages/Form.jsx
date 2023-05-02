@@ -9,8 +9,9 @@ function Form() {
     numberFilter, setNumberFilter,
     buttonFilter, columnOptions,
     filters, removeFilters,
-    setFilters,
-    setColumnOptions } = useContext(AppContext);
+    setFilters, setColumnOptions,
+    columnSort, setColumnSort,
+    setSort, Sort, setOrder, sortOptions } = useContext(AppContext);
 
   return (
     <div>
@@ -48,6 +49,36 @@ function Form() {
         />
         <button data-testid="button-filter" type="button" onClick={ buttonFilter }>
           Filtrar
+        </button>
+        <select
+          data-testid="column-sort"
+          value={ columnSort }
+          onChange={ ({ target }) => setColumnSort(target.value) }
+        >
+          {sortOptions.map((option) => (
+            <option key={ option } value={ option }>{option}</option>
+          ))}
+        </select>
+        <input
+          type="radio"
+          value="ASC"
+          data-testid="column-sort-input-asc"
+          onChange={ () => setSort('ASC') }
+        />
+        Ascendente
+        <input
+          type="radio"
+          value="DESC"
+          data-testid="column-sort-input-desc"
+          onChange={ () => setSort('DESC') }
+        />
+        Descendente
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => setOrder(Sort, columnSort) }
+        >
+          Ordenar
         </button>
         <button
           data-testid="button-remove-filters"

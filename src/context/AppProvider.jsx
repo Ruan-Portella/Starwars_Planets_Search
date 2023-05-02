@@ -8,10 +8,14 @@ function AppProvider({ children }) {
   const [inputText, setInputText] = useState('');
   const [columnOptions, setColumnOptions] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
+  const [sortOptions, setSortOptions] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
   const [columnFilter, setColumnFilter] = useState('population');
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [numberFilter, setNumberFilter] = useState(0);
   const [filters, setFilters] = useState([]);
+  const [columnSort, setColumnSort] = useState('population');
+  const [Sort, setSort] = useState('ASC');
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -37,6 +41,30 @@ function AppProvider({ children }) {
       number: numberFilter }]);
     setColumnFilter(columnOptions[0]);
   }, [columnFilter, comparisonFilter, numberFilter, filters, columnOptions]);
+
+  const setOrder = useCallback((sort, column) => {
+    setSortOptions(sortOptions.filter((option) => option !== column));
+    setColumnSort(sortOptions[0]);
+    const notUnknown = filtered.filter((planet) => planet[column] === 'unknown');
+    const exist = filtered.filter((planet) => planet[column] !== 'unknown');
+    switch (sort) {
+    case 'ASC': {
+      const arraySort = exist.sort((a, b) => Number(a[column] - b[column]));
+      // setFilters([...filters, { column, sort }]);
+      setFiltered([...arraySort, ...notUnknown]);
+      break;
+    }
+    case 'DESC': {
+      const arraySort = exist.sort((a, b) => Number(b[column] - a[column]));
+      // setFilters([...filters, { column, sort }]);
+      setFiltered([...arraySort, ...notUnknown]);
+      break;
+    }
+    default: {
+      break;
+    }
+    }
+  }, [filtered, sortOptions]);
 
   useEffect(() => {
     let filterPlanets = [...data];
@@ -83,11 +111,19 @@ function AppProvider({ children }) {
     filters,
     setFilters,
     removeFilters,
+    columnSort,
+    setColumnSort,
+    setSort,
+    setOrder,
+    Sort,
+    sortOptions,
   }), [filtered, inputText, setInputText, columnFilter,
     setColumnFilter, comparisonFilter, setComparisonFilter,
     numberFilter, setNumberFilter, buttonFilter,
     columnOptions, filters, removeFilters, setFilters,
-    setColumnOptions]);
+    setColumnOptions, columnSort, setColumnSort,
+    setSort, setOrder, Sort, sortOptions,
+  ]);
 
   return (
     <AppContext.Provider value={ values }>
