@@ -3,7 +3,6 @@ import AppContext from '../context/AppContext';
 
 function Table() {
   const { data, inputText } = useContext(AppContext);
-  console.log(data.filter((planet) => (planet.name.includes(inputText))));
   return (
     <table>
       <thead>
