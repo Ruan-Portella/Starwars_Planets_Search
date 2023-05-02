@@ -40,11 +40,8 @@ function AppProvider({ children }) {
     case 'igual a': {
       const filtered = data
         .filter((person) => Number(person[columnFilter]) === Number(numberFilter));
-      console.log(data);
       setData(filtered);
       setFilters([...filters, { columnFilter, comparisonFilter, numberFilter }]);
-      console.log(filtered);
-      console.log(columnFilter, numberFilter, comparisonFilter);
       break;
     }
     default:
