@@ -92,7 +92,7 @@ function AppProvider({ children }) {
         ));
     });
     setFiltered(filterPlanets);
-  }, [data, filters]);
+  }, [data, filters, planetsFiltered]);
 
   const values = useMemo(() => ({
     filtered,
