@@ -99,6 +99,7 @@ function Form() {
                 <span>{filter.comparison}</span>
                 <span>{filter.number}</span>
                 <button
+                  data-testid="buttonRemove-form"
                   type="button"
                   onClick={ () => removeFilters(filter.column) }
                 >

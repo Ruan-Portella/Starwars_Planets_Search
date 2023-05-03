@@ -50,13 +50,11 @@ function AppProvider({ children }) {
     switch (sort) {
     case 'ASC': {
       const arraySort = exist.sort((a, b) => Number(a[column] - b[column]));
-      // setFilters([...filters, { column, sort }]);
       setFiltered([...arraySort, ...notUnknown]);
       break;
     }
     case 'DESC': {
       const arraySort = exist.sort((a, b) => Number(b[column] - a[column]));
-      // setFilters([...filters, { column, sort }]);
       setFiltered([...arraySort, ...notUnknown]);
       break;
     }
