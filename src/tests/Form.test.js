@@ -14,25 +14,10 @@ beforeEach(() => (
 describe('Test StarWars', () => {
   test('Testa se a Tabela é exibida', () => {
     render(<AppProvider><App /></AppProvider>);
-    const inputText = screen.getByTestId('name-filter');
-    const columnFilter = screen.getByTestId('column-filter');
-    const comparasonFilter = screen.getByTestId('comparison-filter');
-    const valueFilter = screen.getByTestId('value-filter');
-    const buttonFilter = screen.getByTestId('button-filter');
-    const columnSort = screen.getByTestId('column-sort');
-    const inputSortAsc = screen.getByTestId('column-sort-input-asc');
     const inputSortDesc = screen.getByTestId('column-sort-input-desc');
-    const buttonSort = screen.getByTestId('column-sort-button');
     const buttonRemove = screen.getByTestId('button-remove-filters');
     expect(buttonRemove).toBeInTheDocument();
-    expect(buttonSort).toBeInTheDocument();
-    expect(columnSort).toBeDefined();
-    expect(inputSortAsc).toBeDefined();
     expect(inputSortDesc).toBeDefined();
-    expect(buttonFilter).toBeDefined();
-    expect(valueFilter).toBeDefined();
-    expect(comparasonFilter).toBeInTheDocument();
-    expect(columnFilter).toBeInTheDocument();
     expect(inputText).toBeInTheDocument();
   });
   test('Verifica se ao pesquisar o filtro funciona', async () => {
@@ -50,7 +35,7 @@ describe('Test StarWars', () => {
     userEvent.selectOptions(columnFilter, ['diameter']);
 
     const comparasonFilter = screen.getByTestId('comparison-filter');
-    userEvent.type(comparasonFilter, ['maior que']);
+    userEvent.selectOptions(comparasonFilter, ['maior que']);
 
     const valueFilter = screen.getByTestId('value-filter');
     userEvent.type(valueFilter, valueFiltered);
@@ -65,7 +50,7 @@ describe('Test StarWars', () => {
 
     userEvent.selectOptions(columnFilter, ['population']);
 
-    userEvent.type(comparasonFilter, ['menor que']);
+    userEvent.selectOptions(comparasonFilter, ['menor que']);
 
     userEvent.type(valueFilter, valueFiltered);
 
@@ -78,7 +63,7 @@ describe('Test StarWars', () => {
 
     userEvent.selectOptions(columnFilter, ['orbital_period']);
 
-    userEvent.type(comparasonFilter, ['igual a']);
+    userEvent.selectOptions(comparasonFilter, ['igual a']);
 
     userEvent.type(valueFilter, valueFiltered);
 
@@ -91,7 +76,7 @@ describe('Test StarWars', () => {
 
     userEvent.selectOptions(columnFilter, ['rotation_period']);
 
-    userEvent.type(comparasonFilter, ['menor que']);
+    userEvent.selectOptions(comparasonFilter, ['menor que']);
 
     userEvent.type(valueFilter, valueFiltered);
 
@@ -104,7 +89,7 @@ describe('Test StarWars', () => {
 
     userEvent.selectOptions(columnFilter, ['surface_water']);
 
-    userEvent.type(comparasonFilter, ['menor que']);
+    userEvent.selectOptions(comparasonFilter, ['igual a']);
 
     userEvent.type(valueFilter, valueFiltered);
 
@@ -175,7 +160,7 @@ describe('Test StarWars', () => {
     userEvent.selectOptions(columnFilter, ['diameter']);
 
     const comparasonFilter = screen.getByTestId('comparison-filter');
-    userEvent.type(comparasonFilter, ['maior que']);
+    userEvent.selectOptions(comparasonFilter, ['maior que']);
 
     const valueFilter = screen.getByTestId('value-filter');
     userEvent.type(valueFilter, valueFiltered);

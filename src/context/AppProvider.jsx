@@ -64,23 +64,24 @@ function AppProvider({ children }) {
     }
   }, [filtered, sortOptions]);
 
+  const planetsFiltered = useCallback((planetValue, comparison, filterValue) => {
+    switch (comparison) {
+    case 'maior que': {
+      return +planetValue > +filterValue;
+    }
+    case 'menor que': {
+      return +planetValue < +filterValue;
+    }
+    case 'igual a': {
+      return +planetValue === +filterValue;
+    }
+    default:
+      return true;
+    }
+  }, []);
+
   useEffect(() => {
     let filterPlanets = [...data];
-    const planetsFiltered = (planetValue, comparison, filterValue) => {
-      switch (comparison) {
-      case 'maior que': {
-        return +planetValue > +filterValue;
-      }
-      case 'menor que': {
-        return +planetValue < +filterValue;
-      }
-      case 'igual a': {
-        return +planetValue === +filterValue;
-      }
-      default:
-        return true;
-      }
-    };
 
     filters.forEach(({ column, comparison, number }) => {
       filterPlanets = filterPlanets
@@ -115,12 +116,13 @@ function AppProvider({ children }) {
     setOrder,
     Sort,
     sortOptions,
+    planetsFiltered,
   }), [filtered, inputText, setInputText, columnFilter,
     setColumnFilter, comparisonFilter, setComparisonFilter,
     numberFilter, setNumberFilter, buttonFilter,
     columnOptions, filters, removeFilters, setFilters,
     setColumnOptions, columnSort, setColumnSort,
-    setSort, setOrder, Sort, sortOptions,
+    setSort, setOrder, Sort, sortOptions, planetsFiltered,
   ]);
 
   return (
