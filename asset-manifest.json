@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Starwars_Planets_Search/static/css/main.ad31edbb.css",
+    "main.js": "/Starwars_Planets_Search/static/js/main.565e14a2.js",
+    "static/media/background.png": "/Starwars_Planets_Search/static/media/background.6829175b6e74ec7e74a4.png",
+    "static/media/logo-starwars.svg": "/Starwars_Planets_Search/static/media/logo-starwars.67b8f88db9b9e74849ce58f33e641ed0.svg",
+    "index.html": "/Starwars_Planets_Search/index.html",
+    "main.ad31edbb.css.map": "/Starwars_Planets_Search/static/css/main.ad31edbb.css.map",
+    "main.565e14a2.js.map": "/Starwars_Planets_Search/static/js/main.565e14a2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ad31edbb.css",
+    "static/js/main.565e14a2.js"
+  ]
+}
