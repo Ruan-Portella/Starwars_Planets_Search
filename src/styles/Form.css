@@ -1,0 +1,116 @@
+body {
+  background-color: rgb(9, 9, 9);
+  margin: 0;
+  padding: 0;
+}
+
+.MainContent {
+  align-items: center;
+  background-color: rgb(40, 39, 39);
+  background-image: url('../images/background.png');
+  background-position: 30% 20%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.ImageContent {
+  display: flex;
+  justify-content: center;
+  margin: 10vh 0;
+}
+
+.FormContent {
+  align-items: center;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+
+  /* height: 100vh; */
+  width: 90vw;
+}
+
+.StarWars {
+  width: 80%;
+}
+
+.searchPlanet {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  padding: 10px 80px;
+}
+
+.searchPlanet::placeholder {
+  color: white;
+}
+
+.formInputs {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.selectFilter {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+}
+
+.comparasionFilter {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+}
+
+.valueFilter {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+}
+
+.buttonFilter {
+  border: 1px solid white;
+  padding: 5px 20px;
+}
+
+.columnFilter {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+}
+
+.filterInfo {
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filterInfo > li {
+  background-color: #2e3035;
+  border-radius: 10px;
+  list-style: none;
+  padding: 5px 10px;
+}
+
+.removeButton {
+  background-color: white;
+  border-radius: 5px;
+  border-style: none;
+  margin-left: 10px;
+  padding: 1px 10px;
+}
+

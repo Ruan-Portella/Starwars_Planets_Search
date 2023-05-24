@@ -27,6 +27,10 @@ function AppProvider({ children }) {
     fetchApi();
   }, []);
 
+  useEffect(() => {
+    setColumnFilter(columnOptions[0]);
+  }, [columnOptions]);
+
   const removeFilters = useCallback((option) => {
     setColumnOptions([...columnOptions, option]);
     const removeFilter = filters.map((columnFilters) => columnFilters)
@@ -39,17 +43,21 @@ function AppProvider({ children }) {
     setFilters([...filters, { column: columnFilter,
       comparison: comparisonFilter,
       number: numberFilter }]);
-    setColumnFilter(columnOptions[0]);
   }, [columnFilter, comparisonFilter, numberFilter, filters, columnOptions]);
 
   const setOrder = useCallback((sort, column) => {
     setSortOptions(sortOptions.filter((option) => option !== column));
+
     setColumnSort(sortOptions[0]);
+
     const notUnknown = filtered.filter((planet) => planet[column] === 'unknown');
+
     const exist = filtered.filter((planet) => planet[column] !== 'unknown');
+
     switch (sort) {
     case 'ASC': {
       const arraySort = exist.sort((a, b) => Number(a[column] - b[column]));
+
       setFiltered([...arraySort, ...notUnknown]);
       break;
     }
@@ -117,6 +125,7 @@ function AppProvider({ children }) {
     Sort,
     sortOptions,
     planetsFiltered,
+    setSortOptions,
   }), [filtered, inputText, setInputText, columnFilter,
     setColumnFilter, comparisonFilter, setComparisonFilter,
     numberFilter, setNumberFilter, buttonFilter,
